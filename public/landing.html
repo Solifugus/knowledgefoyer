@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Foyer - Professional Publishing Platform</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="landing-page">
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="header-brand">
+                <div class="brand-logo">KF</div>
+                Knowledge Foyer
+            </a>
+
+            <nav class="nav-menu" aria-label="Main navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#expositions" class="nav-link">Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register" class="nav-link">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link">Login</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button" aria-label="Toggle mobile menu">
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <nav class="mobile-nav-menu" aria-label="Mobile navigation">
+                <ul class="mobile-nav-menu">
+                    <li><a href="#expositions" class="mobile-nav-link">Explore</a></li>
+                    <li><a href="/register" class="mobile-nav-link">Register</a></li>
+                    <li><a href="/login" class="mobile-nav-link">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to Knowledge Foyer</h1>
+                <p class="hero-subtitle">
+                    A professional publishing platform where creators share evolving work
+                    and receive structured, quality feedback through our innovative pro/con system.
+                </p>
+                <div class="hero-actions">
+                    <a href="/register" class="btn btn-primary btn-lg">Get Started</a>
+                    <a href="#expositions" class="btn btn-secondary btn-lg">Explore Content</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Expositions Section -->
+        <section id="expositions" class="expositions-section">
+            <div class="container">
+                <div class="expositions-header">
+                    <h2 class="expositions-title">Discover Curated Collections</h2>
+                    <p class="expositions-description">
+                        Explore expositions - carefully curated collections of articles on topics that matter.
+                        Each exposition represents deep, evolving knowledge from our community.
+                    </p>
+                </div>
+
+                <div class="expositions-grid" id="expositions-container">
+                    <!-- Expositions will be loaded here dynamically -->
+                    <div class="page-loading">
+                        <div class="page-loading-spinner"></div>
+                        <p class="page-loading-text">Loading expositions...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="section">
+            <div class="container">
+                <h2 class="text-center" style="margin-bottom: var(--space-12);">Platform Features</h2>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3 style="color: var(--color-pro-green); margin-bottom: var(--space-3);">✓ Structured Feedback</h3>
+                        <p>Our innovative pro/con system helps creators understand what's working (pros) and what needs improvement (cons), moving beyond simple likes and dislikes.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--color-blue-electric); margin-bottom: var(--space-3);">⚡ Real-time Collaboration</h3>
+                        <p>MCP-powered WebSocket communication enables live feedback ranking, instant notifications, and collaborative editing experiences.</p>
+                    </div>
+                    <div class="card">
+                        <h3 style="color: var(--color-cyan-bright); margin-bottom: var(--space-3);">🧠 AI Integration</h3>
+                        <p>Smart duplicate detection, feedback similarity analysis, and AI-powered content recommendations help maintain quality and relevance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Platform Technologies -->
+        <section class="section section-secondary">
+            <div class="container">
+                <div class="card dashboard-card">
+                    <h2 style="text-align: center; margin-bottom: var(--space-6);">Built on Modern Technologies</h2>
+                    <div class="responsive-grid-desktop-2">
+                        <div>
+                            <h4>Backend Architecture</h4>
+                            <ul>
+                                <li>MCP (Model Context Protocol) over WebSockets</li>
+                                <li>PostgreSQL with pgvector for AI embeddings</li>
+                                <li>Express.js with comprehensive security</li>
+                                <li>JWT authentication with refresh tokens</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Frontend Experience</h4>
+                            <ul>
+                                <li>Progressive Web App capabilities</li>
+                                <li>Contemporary responsive design</li>
+                                <li>Real-time updates via WebSockets</li>
+                                <li>Offline-capable service worker</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="/health" class="footer-link">Health Check</a>
+                <a href="/metrics" class="footer-link">System Metrics</a>
+                <a href="#" class="footer-link">About</a>
+                <a href="#" class="footer-link">Terms</a>
+                <a href="#" class="footer-link">Privacy</a>
+            </div>
+            <p class="footer-copyright">
+                Knowledge Foyer - Professional Publishing Platform |
+                <span style="color: var(--color-success);">All phases completed ✅</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/core/app.js"></script>
+    <script src="/js/pages/landing.js"></script>
+</body>
+</html>

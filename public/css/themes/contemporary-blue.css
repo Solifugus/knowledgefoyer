@@ -1,0 +1,344 @@
+/* Knowledge Foyer - Contemporary Blue Theme */
+/* Main theme implementation using the design system variables */
+
+/* === GLOBAL THEME APPLICATION === */
+.theme-contemporary-blue {
+  background-color: var(--color-white);
+  color: var(--color-slate-800);
+}
+
+/* === HEADER STYLING === */
+.header {
+  background: linear-gradient(135deg, var(--color-navy-deep) 0%, var(--color-navy-light) 100%);
+  color: var(--color-white);
+  border-bottom: 1px solid var(--color-navy-light);
+  box-shadow: var(--shadow-md);
+}
+
+.header-brand {
+  color: var(--color-white);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-xl);
+}
+
+.header-brand:hover {
+  color: var(--color-blue-light);
+  text-decoration: none;
+}
+
+/* === NAVIGATION === */
+.nav-link {
+  color: var(--color-slate-100);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-normal);
+}
+
+.nav-link:hover {
+  color: var(--color-blue-light);
+}
+
+.nav-link.active {
+  color: var(--color-blue-electric);
+  border-bottom: 2px solid var(--color-blue-electric);
+}
+
+/* === MAIN CONTENT AREAS === */
+.content-area {
+  background-color: var(--color-white);
+  min-height: 100vh;
+}
+
+.section-primary {
+  background-color: var(--color-white);
+}
+
+.section-secondary {
+  background-color: var(--color-slate-50);
+}
+
+/* === LANDING PAGE THEME === */
+.hero-section {
+  background: linear-gradient(135deg, var(--color-slate-50) 0%, var(--color-white) 100%);
+  border-bottom: 1px solid var(--color-slate-200);
+}
+
+.hero-title {
+  color: var(--color-navy-deep);
+  background: linear-gradient(135deg, var(--color-navy-deep) 0%, var(--color-blue-electric) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  color: var(--color-slate-600);
+}
+
+/* === EXPOSITION CARDS === */
+.exposition-card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-slate-200);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  transition: all var(--transition-normal);
+}
+
+.exposition-card:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-blue-electric);
+  transform: translateY(-2px);
+}
+
+.exposition-title {
+  color: var(--color-navy-deep);
+  font-weight: var(--font-weight-semibold);
+}
+
+.exposition-meta {
+  color: var(--color-slate-500);
+  font-size: var(--text-sm);
+}
+
+/* === DASHBOARD THEME === */
+.dashboard-header {
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-slate-200);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-title {
+  color: var(--color-navy-deep);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dashboard-stats {
+  background: linear-gradient(135deg, var(--color-blue-electric) 0%, var(--color-cyan-bright) 100%);
+  color: var(--color-white);
+  border-radius: var(--radius-lg);
+}
+
+/* === ARTICLE LIST === */
+.article-list {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.article-item {
+  border-bottom: 1px solid var(--color-slate-100);
+  transition: background-color var(--transition-fast);
+}
+
+.article-item:hover {
+  background-color: var(--color-slate-50);
+}
+
+.article-item:last-child {
+  border-bottom: none;
+}
+
+.article-title {
+  color: var(--color-navy-deep);
+  font-weight: var(--font-weight-medium);
+}
+
+.article-meta {
+  color: var(--color-slate-500);
+  font-size: var(--text-sm);
+}
+
+/* === THREE-COLUMN LAYOUT === */
+.three-column-container {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.column-pros {
+  background-color: var(--color-pro-background);
+  border-right: 1px solid var(--color-slate-200);
+}
+
+.column-article {
+  background-color: var(--color-white);
+}
+
+.column-cons {
+  background-color: var(--color-con-background);
+  border-left: 1px solid var(--color-slate-200);
+}
+
+/* === FEEDBACK SYSTEM === */
+.feedback-pro {
+  background-color: var(--color-pro-background);
+  border: 1px solid var(--color-pro-green);
+  border-radius: var(--radius-md);
+}
+
+.feedback-con {
+  background-color: var(--color-con-background);
+  border: 1px solid var(--color-con-orange);
+  border-radius: var(--radius-md);
+}
+
+.feedback-icon-pro {
+  color: var(--color-pro-green);
+}
+
+.feedback-icon-con {
+  color: var(--color-con-orange);
+}
+
+.feedback-count-pro {
+  background-color: var(--color-pro-green);
+  color: var(--color-white);
+}
+
+.feedback-count-con {
+  background-color: var(--color-con-orange);
+  color: var(--color-white);
+}
+
+/* === FORMS === */
+.form-container {
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.form-section {
+  background-color: var(--color-slate-50);
+  border-radius: var(--radius-md);
+}
+
+/* === NOTIFICATIONS === */
+.notification-info {
+  background: linear-gradient(135deg, var(--color-blue-electric) 0%, var(--color-cyan-bright) 100%);
+  color: var(--color-white);
+}
+
+.notification-success {
+  background-color: var(--color-success);
+  color: var(--color-white);
+}
+
+.notification-warning {
+  background-color: var(--color-warning);
+  color: var(--color-white);
+}
+
+.notification-error {
+  background-color: var(--color-error);
+  color: var(--color-white);
+}
+
+/* === STATUS INDICATORS === */
+.status-draft {
+  color: var(--color-slate-500);
+  background-color: var(--color-slate-100);
+}
+
+.status-review {
+  color: var(--color-blue-electric);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.status-published {
+  color: var(--color-success);
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.status-attention {
+  color: var(--color-con-orange);
+  background-color: var(--color-con-background);
+}
+
+/* === PROGRESS INDICATORS === */
+.progress-bar {
+  background-color: var(--color-slate-200);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--color-blue-electric) 0%, var(--color-cyan-bright) 100%);
+  transition: width var(--transition-normal);
+}
+
+/* === LOADING STATES === */
+.loading-skeleton {
+  background: linear-gradient(90deg, var(--color-slate-100) 0%, var(--color-slate-200) 50%, var(--color-slate-100) 100%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loading-spinner {
+  border: 2px solid var(--color-slate-200);
+  border-top: 2px solid var(--color-blue-electric);
+  border-radius: 50%;
+  animation: loading-spin 1s linear infinite;
+}
+
+@keyframes loading-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* === RESPONSIVE THEME ADJUSTMENTS === */
+@media (max-width: 768px) {
+  .hero-section {
+    background: var(--color-white);
+  }
+
+  .three-column-container {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .column-pros,
+  .column-cons {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-slate-200);
+    border-radius: var(--radius-md);
+  }
+}
+
+/* === ACCESSIBILITY ENHANCEMENTS === */
+@media (prefers-contrast: high) {
+  .exposition-card {
+    border: 2px solid var(--color-slate-400);
+  }
+
+  .feedback-pro {
+    border-width: 2px;
+  }
+
+  .feedback-con {
+    border-width: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exposition-card,
+  .article-item,
+  .loading-skeleton,
+  .loading-spinner {
+    transition: none;
+    animation: none;
+  }
+
+  .exposition-card:hover {
+    transform: none;
+  }
+}

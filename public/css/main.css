@@ -1,0 +1,86 @@
+/* Knowledge Foyer - Main CSS Entry Point */
+/* Contemporary Blue Theme - Complete Design System */
+
+/* === BASE LAYER === */
+@import url('./base/reset.css');
+@import url('./base/variables.css');
+@import url('./base/typography.css');
+
+/* === COMPONENT LAYER === */
+@import url('./components/buttons.css');
+@import url('./components/cards.css');
+@import url('./components/forms.css');
+@import url('./components/feedback.css');
+@import url('./components/navigation.css');
+@import url('./components/authentication.css');
+@import url('./components/dashboard.css');
+
+/* === LAYOUT LAYER === */
+@import url('./layouts/spa.css');
+@import url('./layouts/three-column.css');
+@import url('./layouts/responsive.css');
+
+/* === THEME LAYER === */
+@import url('./themes/contemporary-blue.css');
+
+/* === GLOBAL OVERRIDES === */
+/* Apply the contemporary blue theme globally */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-white);
+  color: var(--color-slate-800);
+  font-family: var(--font-sans);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === UTILITY CLASSES === */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+/* === PRINT STYLES === */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: #000;
+    background: #fff;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+    color: #000;
+  }
+
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

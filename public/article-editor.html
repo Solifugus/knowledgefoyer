@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Editor - Knowledge Foyer</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="workspace-page">
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="header-brand">
+                <div class="brand-logo">KF</div>
+                Knowledge Foyer
+            </a>
+
+            <nav class="nav-menu" aria-label="Main navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/dashboard" class="nav-link">📝 My Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expositions" class="nav-link">📑 My Expositions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/analytics" class="nav-link">📊 Analytics</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <button class="user-menu-button" id="userMenuButton" aria-label="User menu">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="username">Loading...</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button" aria-label="Toggle mobile menu">
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Workspace Header -->
+    <header class="workspace-header">
+        <div class="workspace-nav">
+            <div class="workspace-title-section">
+                <h1 class="workspace-title">Article Editor</h1>
+                <div class="article-breadcrumb">
+                    <a href="/dashboard" class="breadcrumb-link">My Articles</a>
+                    <span class="breadcrumb-separator">›</span>
+                    <span class="breadcrumb-current" id="articleTitle">Loading article...</span>
+                </div>
+            </div>
+
+            <div class="workspace-actions">
+                <button class="btn btn-tertiary" id="previewToggle" title="Toggle preview mode">
+                    👁️ Preview
+                </button>
+                <button class="btn btn-secondary" id="saveButton" title="Save draft">
+                    💾 Save
+                </button>
+                <button class="btn btn-primary" id="publishButton" title="Publish for review">
+                    🚀 Publish
+                </button>
+                <button class="btn-icon" id="fullscreenToggle" title="Toggle fullscreen">
+                    ⛶
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+        <div class="workspace-content">
+            <!-- Loading State -->
+            <div id="loadingState" class="page-loading">
+                <div class="page-loading-spinner"></div>
+                <p class="page-loading-text">Loading article editor...</p>
+            </div>
+
+            <!-- Article Editor Container -->
+            <div id="editorContainer" class="three-column-layout" style="display: none;">
+                <!-- Pro Feedback Column -->
+                <div class="column column-pros" id="prosColumn">
+                    <div class="feedback-column-header">
+                        <div class="feedback-column-title">
+                            <div class="feedback-icon feedback-icon-pro">✓</div>
+                            <span>Pros</span>
+                            <span class="feedback-count" id="prosCount">0</span>
+                        </div>
+                        <p class="feedback-column-subtitle">What's working well</p>
+                    </div>
+
+                    <div class="feedback-list" id="prosList">
+                        <!-- Pro feedback items will be loaded here -->
+                    </div>
+
+                    <div class="feedback-add-container">
+                        <div class="feedback-add-form" id="addProForm">
+                            <textarea
+                                class="feedback-add-textarea"
+                                id="proTextarea"
+                                placeholder="What's working well in this article? Click here to add a pro..."
+                                rows="3"
+                            ></textarea>
+                            <div class="feedback-add-actions">
+                                <button class="btn btn-pro btn-sm" id="submitProButton" disabled>
+                                    Add Pro
+                                </button>
+                                <span class="feedback-add-tip">
+                                    Tip: Focus on what to keep or amplify
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Content Column -->
+                <div class="column column-article" id="articleColumn">
+                    <div class="article-container">
+                        <!-- Article Header -->
+                        <div class="article-header">
+                            <input
+                                type="text"
+                                class="article-title-input"
+                                id="articleTitleInput"
+                                placeholder="Enter article title..."
+                                maxlength="200"
+                            >
+
+                            <div class="article-meta">
+                                <div class="article-status">
+                                    <div class="status-indicator" id="statusIndicator"></div>
+                                    <span id="statusText">Draft</span>
+                                </div>
+                                <div class="article-version">
+                                    Version <span id="versionNumber">1</span>
+                                </div>
+                            </div>
+
+                            <div class="article-actions">
+                                <div class="mode-toggle">
+                                    <button class="mode-button active" id="editModeButton">Edit</button>
+                                    <button class="mode-button" id="previewModeButton">Preview</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Article Content -->
+                        <div class="article-content">
+                            <!-- Edit Mode -->
+                            <div id="editMode" class="edit-mode">
+                                <textarea
+                                    class="article-editor"
+                                    id="articleEditor"
+                                    placeholder="Start writing your article here...
+
+You can use Markdown formatting:
+# Headings
+**Bold text**
+*Italic text*
+- Bullet points
+> Blockquotes
+
+Focus on creating valuable content that others can provide meaningful feedback on."
+                                ></textarea>
+                            </div>
+
+                            <!-- Preview Mode -->
+                            <div id="previewMode" class="preview-mode" style="display: none;">
+                                <div class="article-preview" id="articlePreview">
+                                    <!-- Rendered markdown will appear here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Con Feedback Column -->
+                <div class="column column-cons" id="consColumn">
+                    <div class="feedback-column-header">
+                        <div class="feedback-column-title">
+                            <div class="feedback-icon feedback-icon-con">✗</div>
+                            <span>Cons</span>
+                            <span class="feedback-count" id="consCount">0</span>
+                        </div>
+                        <p class="feedback-column-subtitle">Areas for improvement</p>
+                    </div>
+
+                    <div class="feedback-list" id="consList">
+                        <!-- Con feedback items will be loaded here -->
+                    </div>
+
+                    <div class="feedback-add-container">
+                        <div class="feedback-add-form" id="addConForm">
+                            <textarea
+                                class="feedback-add-textarea"
+                                id="conTextarea"
+                                placeholder="What could be improved in this article? Click here to add a con..."
+                                rows="3"
+                            ></textarea>
+                            <div class="feedback-add-actions">
+                                <button class="btn btn-con btn-sm" id="submitConButton" disabled>
+                                    Add Con
+                                </button>
+                                <span class="feedback-add-tip">
+                                    Tip: Focus on constructive improvements
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Summary (Mobile) -->
+            <div id="feedbackSummary" class="feedback-summary" style="display: none;">
+                <h3 class="feedback-summary-title">Feedback Overview</h3>
+                <div class="feedback-summary-stats">
+                    <div class="feedback-stat feedback-stat-pro">
+                        <div class="feedback-stat-value" id="summaryProsCount">0</div>
+                        <div class="feedback-stat-label">Pros</div>
+                    </div>
+                    <div class="feedback-stat feedback-stat-con">
+                        <div class="feedback-stat-value" id="summaryConsCount">0</div>
+                        <div class="feedback-stat-label">Cons</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Fullscreen Toggle (when in fullscreen) -->
+    <button class="fullscreen-toggle" id="exitFullscreen" style="display: none;" title="Exit fullscreen">
+        ✕
+    </button>
+
+    <!-- Status Bar -->
+    <div class="status-bar" id="statusBar" style="display: none;">
+        <div class="status-message" id="statusMessage"></div>
+        <div class="word-count">
+            <span id="wordCount">0</span> words
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/core/app.js"></script>
+    <script src="/js/core/mcp-client.js"></script>
+    <script src="/js/utils/markdown.js"></script>
+    <script src="/js/components/article-editor.js"></script>
+    <script src="/js/components/feedback-system.js"></script>
+    <script src="/js/pages/article-editor.js"></script>
+</body>
+</html>

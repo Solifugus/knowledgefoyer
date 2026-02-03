@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro/Con Feedback System Demo - Knowledge Foyer</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* Demo-specific styles */
+        .demo-banner {
+            background: linear-gradient(135deg, var(--color-blue-electric), var(--color-cyan-bright));
+            color: white;
+            padding: var(--spacing-4);
+            text-align: center;
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--spacing-6);
+        }
+
+        .demo-feedback-item {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="workspace-page">
+    <!-- Demo Banner -->
+    <div class="demo-banner">
+        🚀 Knowledge Foyer Pro/Con Feedback System Demo - Three-Column Collaborative Writing Interface
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="header-brand">
+                <div class="brand-logo">KF</div>
+                Knowledge Foyer
+            </a>
+
+            <nav class="nav-menu" aria-label="Main navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">🏠 Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/workspace-demo" class="nav-link active">📝 Pro/Con Demo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+        <!-- Three-Column Layout -->
+        <div class="three-column-layout" id="workspaceLayout">
+            <!-- Fullscreen Toggle -->
+            <button class="fullscreen-toggle" id="fullscreenToggle" title="Toggle fullscreen mode">
+                ⛶
+            </button>
+
+            <!-- PROS COLUMN -->
+            <div class="column column-pros">
+                <div class="feedback-column feedback-column-pros">
+                    <div class="feedback-column-header">
+                        <div class="feedback-column-title">
+                            <div class="feedback-icon feedback-icon-pro">✓</div>
+                            <span>Pros</span>
+                            <div class="feedback-count">3</div>
+                        </div>
+                        <div class="feedback-column-subtitle">
+                            What works well in this article
+                        </div>
+                    </div>
+
+                    <div class="feedback-list">
+                        <!-- Demo Pro Feedback Items -->
+                        <div class="feedback-item feedback-item-pro demo-feedback-item">
+                            <div class="feedback-content">
+                                Great introduction that clearly sets up the problem and solution. The structure makes it easy to follow your thinking.
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@alice_writer</span>
+                                    <span class="feedback-date">1 day ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button voted">
+                                    👍 <span class="feedback-vote-count">12</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item feedback-item-pro demo-feedback-item">
+                            <div class="feedback-content">
+                                Love the specific benefits breakdown for both writers and readers. This shows you understand both perspectives.
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@bob_reviewer</span>
+                                    <span class="feedback-date">12 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button">
+                                    👍 <span class="feedback-vote-count">8</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item feedback-item-pro demo-feedback-item">
+                            <div class="feedback-content">
+                                The three-column layout concept is innovative and addresses a real need in collaborative writing platforms.
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@design_guru</span>
+                                    <span class="feedback-date">6 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button">
+                                    👍 <span class="feedback-vote-count">5</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feedback-add-container">
+                        <div class="feedback-add-form">
+                            <textarea
+                                class="feedback-add-textarea"
+                                placeholder="Share what works well in this article..."
+                                rows="3"
+                            ></textarea>
+                            <div class="feedback-add-actions">
+                                <div class="feedback-add-tip">
+                                    Ctrl+Enter to submit
+                                </div>
+                                <button class="btn btn-primary btn-sm">
+                                    Add Pro
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLE COLUMN -->
+            <div class="column column-article">
+                <div class="article-container">
+                    <!-- Article Header -->
+                    <div class="article-header">
+                        <input
+                            type="text"
+                            class="article-title-input"
+                            placeholder="Enter your article title..."
+                            value="The Future of Collaborative Writing"
+                        />
+
+                        <div class="article-meta">
+                            <div class="article-status">
+                                <div class="status-indicator attention"></div>
+                                <span>Needs attention</span>
+                                <span>• Version 3</span>
+                                <span>• 428 words</span>
+                            </div>
+
+                            <div class="article-actions">
+                                <button class="btn btn-secondary btn-sm">
+                                    💾 Save
+                                </button>
+                                <button class="btn btn-primary btn-sm">
+                                    🚀 Publish
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mode Toggle -->
+                        <div class="mode-toggle">
+                            <button class="mode-button active">Edit</button>
+                            <button class="mode-button">Preview</button>
+                        </div>
+                    </div>
+
+                    <!-- Article Content -->
+                    <div class="article-content">
+                        <div class="article-preview">
+                            <h1>The Future of Collaborative Writing</h1>
+
+                            <p>In an era where knowledge sharing has become paramount, the way we create and refine content is evolving. Traditional writing often happens in isolation, with feedback coming only after publication. But what if we could revolutionize this process?</p>
+
+                            <h2>A New Paradigm</h2>
+
+                            <p>Imagine a platform where:</p>
+                            <ul>
+                                <li>Writers receive real-time constructive feedback</li>
+                                <li>Readers can highlight both strengths and areas for improvement</li>
+                                <li>The writing process becomes truly collaborative</li>
+                                <li>Quality improves through structured, actionable insights</li>
+                            </ul>
+
+                            <h2>The Pro/Con System</h2>
+
+                            <p>This innovative approach uses a structured feedback system where readers can:</p>
+                            <ol>
+                                <li><strong>Highlight Pros</strong>: Point out what works well</li>
+                                <li><strong>Identify Cons</strong>: Suggest specific improvements</li>
+                                <li><strong>Rank Feedback</strong>: Vote on the most helpful suggestions</li>
+                                <li><strong>Track Progress</strong>: See how articles evolve based on feedback</li>
+                            </ol>
+
+                            <h2>Benefits for Writers</h2>
+
+                            <p>The advantages are clear:</p>
+                            <ul>
+                                <li><strong>Faster Iteration</strong>: Get feedback before final publication</li>
+                                <li><strong>Better Quality</strong>: Address issues while writing</li>
+                                <li><strong>Community Building</strong>: Engage directly with readers</li>
+                                <li><strong>Skill Development</strong>: Learn from constructive criticism</li>
+                            </ul>
+
+                            <h2>Implementation Challenges</h2>
+
+                            <p>Of course, there are challenges to consider:</p>
+                            <ul>
+                                <li>Maintaining constructive feedback tone</li>
+                                <li>Preventing overwhelming criticism</li>
+                                <li>Balancing different perspectives</li>
+                                <li>Ensuring productive collaboration</li>
+                            </ul>
+
+                            <h2>Conclusion</h2>
+
+                            <p>The future of writing is collaborative, transparent, and iterative. By embracing structured feedback systems, we can create a new paradigm where both writers and readers benefit from the creative process.</p>
+
+                            <p><em>What do you think? How could this system be improved further?</em></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONS COLUMN -->
+            <div class="column column-cons">
+                <div class="feedback-column feedback-column-cons">
+                    <div class="feedback-column-header">
+                        <div class="feedback-column-title">
+                            <div class="feedback-icon feedback-icon-con">✗</div>
+                            <span>Cons</span>
+                            <div class="feedback-count high">4</div>
+                        </div>
+                        <div class="feedback-column-subtitle">
+                            Areas for improvement and suggestions
+                        </div>
+                    </div>
+
+                    <div class="feedback-list">
+                        <!-- Demo Con Feedback Items -->
+                        <div class="feedback-item feedback-item-con demo-feedback-item">
+                            <div class="feedback-content">
+                                The implementation challenges section could use more specific examples. What exactly would "overwhelming criticism" look like?
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@carol_editor</span>
+                                    <span class="feedback-date">6 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button">
+                                    👍 <span class="feedback-vote-count">15</span>
+                                </button>
+                                <button class="btn btn-tertiary btn-sm">
+                                    ✓ Resolve
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item feedback-item-con demo-feedback-item">
+                            <div class="feedback-content">
+                                Consider adding real-world examples or case studies to support your points about collaborative writing benefits.
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@david_researcher</span>
+                                    <span class="feedback-date">3 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button">
+                                    👍 <span class="feedback-vote-count">9</span>
+                                </button>
+                                <button class="btn btn-tertiary btn-sm">
+                                    ✓ Resolve
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item feedback-item-con demo-feedback-item">
+                            <div class="feedback-content">
+                                The article mentions "structured feedback" but doesn't explain how to ensure feedback quality. Maybe add guidelines for constructive criticism?
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@feedback_expert</span>
+                                    <span class="feedback-date">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button">
+                                    👍 <span class="feedback-vote-count">7</span>
+                                </button>
+                                <button class="btn btn-tertiary btn-sm">
+                                    ✓ Resolve
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="feedback-item feedback-item-con demo-feedback-item resolved">
+                            <div class="feedback-resolution-badge">Resolved</div>
+                            <div class="feedback-content">
+                                The conclusion feels rushed. Consider expanding on the vision for how this would change online writing communities.
+                            </div>
+                            <div class="feedback-meta">
+                                <div class="feedback-author">
+                                    <span>@community_builder</span>
+                                    <span class="feedback-date">1 hour ago</span>
+                                </div>
+                            </div>
+                            <div class="feedback-actions">
+                                <button class="feedback-vote-button">
+                                    👍 <span class="feedback-vote-count">12</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feedback-add-container">
+                        <div class="feedback-add-form">
+                            <textarea
+                                class="feedback-add-textarea"
+                                placeholder="Suggest improvements for this article..."
+                                rows="3"
+                            ></textarea>
+                            <div class="feedback-add-actions">
+                                <div class="feedback-add-tip">
+                                    Ctrl+Enter to submit
+                                </div>
+                                <button class="btn btn-primary btn-sm">
+                                    Add Con
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Summary (Mobile) -->
+        <div class="feedback-summary" style="display: none;">
+            <div class="feedback-summary-title">Feedback Overview</div>
+            <div class="feedback-summary-stats">
+                <div class="feedback-stat feedback-stat-pro">
+                    <div class="feedback-stat-value">3</div>
+                    <div class="feedback-stat-label">Pros</div>
+                </div>
+                <div class="feedback-stat feedback-stat-con">
+                    <div class="feedback-stat-value">4</div>
+                    <div class="feedback-stat-label">Cons</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Demo interactions
+        document.getElementById('fullscreenToggle')?.addEventListener('click', () => {
+            const layout = document.getElementById('workspaceLayout');
+            layout.classList.toggle('fullscreen');
+        });
+
+        // Add some interactivity to vote buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.feedback-vote-button, .feedback-vote-button *')) {
+                const button = e.target.closest('.feedback-vote-button');
+                if (!button.classList.contains('voted')) {
+                    button.classList.add('voted');
+                    const count = button.querySelector('.feedback-vote-count');
+                    const currentCount = parseInt(count.textContent);
+                    count.textContent = currentCount + 1;
+                }
+            }
+        });
+
+        // Mobile responsive feedback summary
+        function toggleMobileSummary() {
+            const summary = document.querySelector('.feedback-summary');
+            if (window.innerWidth <= 768) {
+                summary.style.display = 'block';
+            } else {
+                summary.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', toggleMobileSummary);
+        toggleMobileSummary();
+    </script>
+</body>
+</html>

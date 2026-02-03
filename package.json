@@ -1,0 +1,74 @@
+{
+  "name": "knowledge-foyer",
+  "version": "0.1.0",
+  "description": "Professional publishing platform for evolving work and structured feedback",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "setup": "scripts/setup-database.sh",
+    "setup:db": "scripts/setup-database.sh setup",
+    "setup:clean": "scripts/setup-database.sh clean",
+    "db:migrate": "node migrations/migrate.js",
+    "db:seed": "node scripts/seed-data.js",
+    "db:test": "scripts/setup-database.sh test",
+    "lint": "eslint src/ --ext .js",
+    "lint:fix": "eslint src/ --ext .js --fix"
+  },
+  "keywords": [
+    "publishing",
+    "feedback",
+    "mcp",
+    "websocket",
+    "ai",
+    "collaboration"
+  ],
+  "author": "Knowledge Foyer Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.0",
+    "ws": "^8.14.0",
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "pg": "^8.11.0",
+    "pgvector": "^0.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "bcrypt": "^5.1.0",
+    "openai": "^4.0.0",
+    "nodemailer": "^6.9.0",
+    "validator": "^13.11.0",
+    "dotenv": "^16.3.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^6.10.0",
+    "compression": "^1.7.4",
+    "marked": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.0",
+    "eslint": "^8.52.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "supertest": "^6.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/config/database.js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.js",
+      "**/__tests__/**/*.js"
+    ]
+  }
+}

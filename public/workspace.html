@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace - Knowledge Foyer</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="workspace-page">
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="header-brand">
+                <div class="brand-logo">KF</div>
+                Knowledge Foyer
+            </a>
+
+            <nav class="nav-menu" aria-label="Main navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">🏠 Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/workspace" class="nav-link active">📝 Workspace</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link btn-logout" id="logoutButton">🚪 Logout</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button" aria-label="Toggle mobile menu">
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+        <!-- Three-Column Layout -->
+        <div class="three-column-layout" id="workspaceLayout">
+            <!-- Fullscreen Toggle -->
+            <button class="fullscreen-toggle" id="fullscreenToggle" title="Toggle fullscreen mode">
+                ⛶
+            </button>
+
+            <!-- PROS COLUMN -->
+            <div class="column column-pros" id="prosColumn">
+                <div class="feedback-column feedback-column-pros">
+                    <div class="feedback-column-header">
+                        <div class="feedback-column-title">
+                            <div class="feedback-icon feedback-icon-pro">✓</div>
+                            <span>Pros</span>
+                            <div class="feedback-count" id="prosCount">0</div>
+                        </div>
+                        <div class="feedback-column-subtitle">
+                            What works well in this article
+                        </div>
+                    </div>
+
+                    <div class="feedback-list" id="prosList">
+                        <!-- Pro feedback items will be rendered here -->
+                    </div>
+
+                    <div class="feedback-add-container">
+                        <div class="feedback-add-form">
+                            <textarea
+                                class="feedback-add-textarea"
+                                id="proTextarea"
+                                placeholder="Share what works well in this article..."
+                                rows="3"
+                            ></textarea>
+                            <div class="feedback-add-actions">
+                                <div class="feedback-add-tip">
+                                    Ctrl+Enter to submit
+                                </div>
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    id="submitProButton"
+                                    disabled
+                                >
+                                    Add Pro
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTICLE COLUMN -->
+            <div class="column column-article" id="articleColumn">
+                <div class="article-container">
+                    <!-- Article Header -->
+                    <div class="article-header">
+                        <input
+                            type="text"
+                            class="article-title-input"
+                            id="articleTitleInput"
+                            placeholder="Enter your article title..."
+                            value="The Future of Collaborative Writing"
+                        />
+
+                        <div class="article-meta">
+                            <div class="article-status">
+                                <div class="status-indicator draft" id="statusIndicator"></div>
+                                <span id="statusText">Draft</span>
+                                <span>• Version <span id="versionNumber">1</span></span>
+                                <span>• <span id="wordCount">0</span> words</span>
+                            </div>
+
+                            <div class="article-actions">
+                                <button class="btn btn-secondary btn-sm" id="saveButton">
+                                    💾 Save
+                                </button>
+                                <button class="btn btn-primary btn-sm" id="publishButton">
+                                    🚀 Publish
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Mode Toggle -->
+                        <div class="mode-toggle">
+                            <button class="mode-button active" id="editModeButton">Edit</button>
+                            <button class="mode-button" id="previewModeButton">Preview</button>
+                        </div>
+                    </div>
+
+                    <!-- Article Content -->
+                    <div class="article-content">
+                        <!-- Edit Mode -->
+                        <div class="edit-mode" id="editMode">
+                            <textarea
+                                class="article-editor"
+                                id="articleEditor"
+                                placeholder="Start writing your article...
+
+You can use Markdown formatting:
+# Headings
+**Bold text**
+*Italic text*
+- Bullet points
+1. Numbered lists
+[Links](https://example.com)
+> Blockquotes
+
+The pros and cons will appear as you write and receive feedback from readers."
+                            >
+# The Future of Collaborative Writing
+
+In an era where knowledge sharing has become paramount, the way we create and refine content is evolving. Traditional writing often happens in isolation, with feedback coming only after publication. But what if we could revolutionize this process?
+
+## A New Paradigm
+
+Imagine a platform where:
+
+- Writers receive real-time constructive feedback
+- Readers can highlight both strengths and areas for improvement
+- The writing process becomes truly collaborative
+- Quality improves through structured, actionable insights
+
+## The Pro/Con System
+
+This innovative approach uses a structured feedback system where readers can:
+
+1. **Highlight Pros**: Point out what works well
+2. **Identify Cons**: Suggest specific improvements
+3. **Rank Feedback**: Vote on the most helpful suggestions
+4. **Track Progress**: See how articles evolve based on feedback
+
+## Benefits for Writers
+
+The advantages are clear:
+- **Faster Iteration**: Get feedback before final publication
+- **Better Quality**: Address issues while writing
+- **Community Building**: Engage directly with readers
+- **Skill Development**: Learn from constructive criticism
+
+## Benefits for Readers
+
+Readers also gain value:
+- **Active Participation**: Shape content as it develops
+- **Learning Opportunity**: See the writing process unfold
+- **Quality Content**: Read better, more refined articles
+- **Recognition**: Get credited for valuable contributions
+
+## Implementation Challenges
+
+Of course, there are challenges to consider:
+- Maintaining constructive feedback tone
+- Preventing overwhelming criticism
+- Balancing different perspectives
+- Ensuring productive collaboration
+
+## Conclusion
+
+The future of writing is collaborative, transparent, and iterative. By embracing structured feedback systems, we can create a new paradigm where both writers and readers benefit from the creative process.
+
+What do you think? How could this system be improved further?
+                            </textarea>
+                        </div>
+
+                        <!-- Preview Mode -->
+                        <div class="preview-mode" id="previewMode" style="display: none;">
+                            <div class="article-preview" id="articlePreview">
+                                <!-- Rendered markdown will appear here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONS COLUMN -->
+            <div class="column column-cons" id="consColumn">
+                <div class="feedback-column feedback-column-cons">
+                    <div class="feedback-column-header">
+                        <div class="feedback-column-title">
+                            <div class="feedback-icon feedback-icon-con">✗</div>
+                            <span>Cons</span>
+                            <div class="feedback-count" id="consCount">0</div>
+                        </div>
+                        <div class="feedback-column-subtitle">
+                            Areas for improvement and suggestions
+                        </div>
+                    </div>
+
+                    <div class="feedback-list" id="consList">
+                        <!-- Con feedback items will be rendered here -->
+                    </div>
+
+                    <div class="feedback-add-container">
+                        <div class="feedback-add-form">
+                            <textarea
+                                class="feedback-add-textarea"
+                                id="conTextarea"
+                                placeholder="Suggest improvements for this article..."
+                                rows="3"
+                            ></textarea>
+                            <div class="feedback-add-actions">
+                                <div class="feedback-add-tip">
+                                    Ctrl+Enter to submit
+                                </div>
+                                <button
+                                    class="btn btn-primary btn-sm"
+                                    id="submitConButton"
+                                    disabled
+                                >
+                                    Add Con
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Summary (Mobile) -->
+        <div class="feedback-summary" style="display: none;" id="feedbackSummary">
+            <div class="feedback-summary-title">Feedback Overview</div>
+            <div class="feedback-summary-stats">
+                <div class="feedback-stat feedback-stat-pro">
+                    <div class="feedback-stat-value" id="summaryProsCount">0</div>
+                    <div class="feedback-stat-label">Pros</div>
+                </div>
+                <div class="feedback-stat feedback-stat-con">
+                    <div class="feedback-stat-value" id="summaryConsCount">0</div>
+                    <div class="feedback-stat-label">Cons</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="/js/core/app.js"></script>
+    <script src="/js/core/mcp-client.js"></script>
+    <script src="/js/components/feedback-system.js"></script>
+    <script src="/js/components/article-editor.js"></script>
+    <script>
+        // Initialize the workspace when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('🚀 Initializing Knowledge Foyer Workspace');
+
+            try {
+                // Check authentication
+                if (!window.app.isAuthenticated) {
+                    window.location.href = '/login';
+                    return;
+                }
+
+                // Initialize MCP client
+                window.mcpClient = new MCPClient();
+                await window.mcpClient.connect();
+
+                // Initialize components with demo article ID
+                const articleId = 'demo-article-123';
+
+                // Initialize feedback system
+                window.feedbackSystem = new FeedbackSystem(articleId, window.mcpClient);
+
+                // Initialize article editor
+                window.articleEditor = new ArticleEditor(articleId, window.mcpClient);
+
+                // Mock some feedback data for demonstration
+                setTimeout(() => {
+                    if (window.feedbackSystem) {
+                        // Mock pro feedback
+                        window.feedbackSystem.prosData = [
+                            {
+                                id: 'pro-1',
+                                content: 'Great introduction that clearly sets up the problem and solution. The structure makes it easy to follow your thinking.',
+                                author_username: 'alice_writer',
+                                created_at: new Date(Date.now() - 86400000).toISOString(),
+                                vote_count: 12,
+                                user_voted: false,
+                                status: 'active'
+                            },
+                            {
+                                id: 'pro-2',
+                                content: 'Love the specific benefits breakdown for both writers and readers. This shows you understand both perspectives.',
+                                author_username: 'bob_reviewer',
+                                created_at: new Date(Date.now() - 43200000).toISOString(),
+                                vote_count: 8,
+                                user_voted: true,
+                                status: 'active'
+                            }
+                        ];
+
+                        // Mock con feedback
+                        window.feedbackSystem.consData = [
+                            {
+                                id: 'con-1',
+                                content: 'The implementation challenges section could use more specific examples. What exactly would "overwhelming criticism" look like?',
+                                author_username: 'carol_editor',
+                                created_at: new Date(Date.now() - 21600000).toISOString(),
+                                vote_count: 15,
+                                user_voted: false,
+                                status: 'active'
+                            },
+                            {
+                                id: 'con-2',
+                                content: 'Consider adding real-world examples or case studies to support your points about collaborative writing benefits.',
+                                author_username: 'david_researcher',
+                                created_at: new Date(Date.now() - 10800000).toISOString(),
+                                vote_count: 9,
+                                user_voted: false,
+                                status: 'active'
+                            }
+                        ];
+
+                        // Render the mock data
+                        window.feedbackSystem.renderFeedback();
+                        window.feedbackSystem.updateCounts();
+                    }
+                }, 1000);
+
+                console.log('✅ Workspace initialized successfully');
+
+            } catch (error) {
+                console.error('❌ Failed to initialize workspace:', error);
+                window.app.showNotification('Failed to connect to feedback system', 'error');
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logoutButton')?.addEventListener('click', () => {
+            window.app.logout();
+        });
+
+        // Handle fullscreen toggle
+        document.getElementById('fullscreenToggle')?.addEventListener('click', () => {
+            const layout = document.getElementById('workspaceLayout');
+            layout.classList.toggle('fullscreen');
+        });
+    </script>
+</body>
+</html>

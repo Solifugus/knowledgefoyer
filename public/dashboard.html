@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Knowledge Foyer</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="workspace-page">
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="header-brand">
+                <div class="brand-logo">KF</div>
+                Knowledge Foyer
+            </a>
+
+            <nav class="nav-menu" aria-label="Main navigation">
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="/dashboard" class="nav-link active">📝 My Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/expositions" class="nav-link">📑 My Expositions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/analytics" class="nav-link">📊 Analytics</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="user-menu">
+                <button class="user-menu-button" id="userMenuButton" aria-label="User menu">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <span id="username">Loading...</span>
+                </button>
+                <div class="user-menu-dropdown" id="userMenuDropdown">
+                    <a href="/profile" class="user-menu-item">👤 Profile</a>
+                    <a href="/settings" class="user-menu-item">⚙️ Settings</a>
+                    <div class="user-menu-separator"></div>
+                    <button class="user-menu-item logout-button" id="logoutButton">🚪 Sign Out</button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button" aria-label="Toggle mobile menu">
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <div class="mobile-menu-content">
+                <nav class="mobile-nav">
+                    <a href="/dashboard" class="mobile-nav-link active">📝 My Articles</a>
+                    <a href="/expositions" class="mobile-nav-link">📑 My Expositions</a>
+                    <a href="/analytics" class="mobile-nav-link">📊 Analytics</a>
+                    <a href="/profile" class="mobile-nav-link">👤 Profile</a>
+                    <a href="/settings" class="mobile-nav-link">⚙️ Settings</a>
+                    <button class="mobile-nav-link logout-button">🚪 Sign Out</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Workspace Header -->
+    <header class="workspace-header">
+        <div class="workspace-nav">
+            <div class="workspace-title-section">
+                <h1 class="workspace-title">My Articles</h1>
+                <p class="workspace-subtitle">Manage your articles and track feedback progress</p>
+            </div>
+
+            <div class="workspace-actions">
+                <button class="btn btn-secondary" id="refreshButton" title="Refresh articles">
+                    🔄 Refresh
+                </button>
+                <button class="btn btn-primary" id="createArticleButton" title="Create new article">
+                    ✏️ New Article
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+        <div class="workspace-content">
+            <!-- Loading State -->
+            <div id="loadingState" class="page-loading">
+                <div class="page-loading-spinner"></div>
+                <p class="page-loading-text">Loading your articles...</p>
+            </div>
+
+            <!-- Dashboard Container -->
+            <div id="dashboardContainer" class="dashboard-container" style="display: none;">
+                <!-- Dashboard Stats -->
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalArticles">0</div>
+                            <div class="stat-label">Total Articles</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="publishedArticles">0</div>
+                            <div class="stat-label">Published</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👍</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalPros">0</div>
+                            <div class="stat-label">Total Pros</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card attention-needed" id="needsAttentionCard">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="needsAttention">0</div>
+                            <div class="stat-label">Need Attention</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Articles Management -->
+                <div class="articles-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Articles</h2>
+                        <div class="section-controls">
+                            <div class="sort-controls">
+                                <label for="sortSelect" class="sort-label">Sort by:</label>
+                                <select id="sortSelect" class="sort-select">
+                                    <option value="updated_at">Last Modified</option>
+                                    <option value="created_at">Date Created</option>
+                                    <option value="title">Title</option>
+                                    <option value="feedback_ratio">Feedback Ratio</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </div>
+                            <div class="view-toggle">
+                                <button class="view-button active" id="cardViewButton" title="Card view">
+                                    ⊞
+                                </button>
+                                <button class="view-button" id="listViewButton" title="List view">
+                                    ≡
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Articles Grid/List -->
+                    <div class="articles-container">
+                        <!-- Card View -->
+                        <div id="cardView" class="articles-grid">
+                            <!-- Article cards will be generated here -->
+                        </div>
+
+                        <!-- List View -->
+                        <div id="listView" class="articles-table" style="display: none;">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Article</th>
+                                        <th>Last Modified</th>
+                                        <th>Status</th>
+                                        <th>Pros</th>
+                                        <th>Cons</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="articlesTableBody">
+                                    <!-- Table rows will be generated here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div id="emptyState" class="empty-state" style="display: none;">
+                            <div class="empty-state-icon">📝</div>
+                            <h3 class="empty-state-title">No articles yet</h3>
+                            <p class="empty-state-description">
+                                Start your knowledge sharing journey by creating your first article.
+                            </p>
+                            <button class="btn btn-primary" onclick="window.location.href='/article-editor.html'">
+                                ✏️ Create Your First Article
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-section">
+                    <h2 class="section-title">Quick Actions</h2>
+                    <div class="quick-actions-grid">
+                        <a href="/article-editor.html" class="quick-action-card">
+                            <div class="quick-action-icon">✏️</div>
+                            <div class="quick-action-content">
+                                <h3 class="quick-action-title">Write Article</h3>
+                                <p class="quick-action-description">Create a new article with our editor</p>
+                            </div>
+                        </a>
+
+                        <a href="/analytics" class="quick-action-card">
+                            <div class="quick-action-icon">📊</div>
+                            <div class="quick-action-content">
+                                <h3 class="quick-action-title">View Analytics</h3>
+                                <p class="quick-action-description">See detailed feedback insights</p>
+                            </div>
+                        </a>
+
+                        <a href="/expositions" class="quick-action-card">
+                            <div class="quick-action-icon">📑</div>
+                            <div class="quick-action-content">
+                                <h3 class="quick-action-title">Manage Expositions</h3>
+                                <p class="quick-action-description">Organize your article collections</p>
+                            </div>
+                        </a>
+
+                        <a href="/profile" class="quick-action-card">
+                            <div class="quick-action-icon">⚙️</div>
+                            <div class="quick-action-content">
+                                <h3 class="quick-action-title">Settings</h3>
+                                <p class="quick-action-description">Customize your workspace</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="error-state" style="display: none;">
+                <div class="error-state-icon">❌</div>
+                <h3 class="error-state-title">Unable to load articles</h3>
+                <p class="error-state-description">
+                    There was a problem loading your articles. Please try again.
+                </p>
+                <button class="btn btn-primary" id="retryButton">
+                    🔄 Try Again
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Article Action Modal -->
+    <div id="articleActionModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Article Actions</h3>
+                <button class="modal-close" id="modalCloseButton" aria-label="Close modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="editArticleButton">
+                        ✏️ Edit Article
+                    </button>
+                    <button class="btn btn-secondary" id="viewArticleButton">
+                        👁️ View Public Page
+                    </button>
+                    <button class="btn btn-tertiary" id="duplicateArticleButton">
+                        📋 Duplicate
+                    </button>
+                    <button class="btn btn-danger" id="deleteArticleButton">
+                        🗑️ Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/core/app.js"></script>
+    <script src="/js/core/mcp-client.js"></script>
+    <script src="/js/components/dashboard.js"></script>
+    <script src="/js/pages/dashboard.js"></script>
+</body>
+</html>

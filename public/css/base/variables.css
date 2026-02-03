@@ -1,0 +1,161 @@
+/* Knowledge Foyer - Contemporary Blue Design System */
+/* CSS Custom Properties for consistent theming */
+
+:root {
+  /* === PRIMARY COLOR PALETTE === */
+  /* Deep Navy - Headers, primary backgrounds, main navigation */
+  --color-navy-deep: #1e293b;
+  --color-navy-light: #334155;
+  --color-navy-dark: #0f172a;
+
+  /* Electric Blue - Interactive elements, CTAs, links */
+  --color-blue-electric: #3b82f6;
+  --color-blue-light: #60a5fa;
+  --color-blue-dark: #2563eb;
+
+  /* Cyan Blue - Accents, highlights, secondary actions */
+  --color-cyan-bright: #06b6d4;
+  --color-cyan-light: #22d3ee;
+  --color-cyan-dark: #0891b2;
+
+  /* === NEUTRAL PALETTE === */
+  /* Blue-tinted grays for contemporary feel */
+  --color-white: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+
+  /* === FEEDBACK SYSTEM COLORS === */
+  /* Pro indicators - emerald green for "keep/amplify this" */
+  --color-pro-green: #10b981;
+  --color-pro-green-light: #34d399;
+  --color-pro-green-dark: #059669;
+  --color-pro-background: #ecfdf5;
+
+  /* Con indicators - orange for "improve/address this" (not negative) */
+  --color-con-orange: #f59e0b;
+  --color-con-orange-light: #fbbf24;
+  --color-con-orange-dark: #d97706;
+  --color-con-background: #fef3c7;
+
+  /* === STATUS & SEMANTIC COLORS === */
+  --color-success: #10b981;
+  --color-success-light: #34d399;
+  --color-success-dark: #059669;
+
+  --color-warning: #f59e0b;
+  --color-warning-light: #fbbf24;
+  --color-warning-dark: #d97706;
+
+  --color-error: #ef4444;
+  --color-error-light: #f87171;
+  --color-error-dark: #dc2626;
+
+  --color-info: #3b82f6; /* Uses brand blue for informational messages */
+
+  /* === TYPOGRAPHY === */
+  /* Font families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Font sizes (modular scale) */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+
+  /* Line heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.8;
+
+  /* === SPACING SYSTEM === */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+
+  /* === BORDER RADIUS === */
+  --radius-sm: 0.125rem;  /* 2px */
+  --radius: 0.25rem;      /* 4px */
+  --radius-md: 0.375rem;  /* 6px */
+  --radius-lg: 0.5rem;    /* 8px */
+  --radius-xl: 0.75rem;   /* 12px */
+  --radius-2xl: 1rem;     /* 16px */
+
+  /* === SHADOWS === */
+  /* Blue-tinted shadows for contemporary feel */
+  --shadow-sm: 0 1px 2px rgba(59, 130, 246, 0.1);
+  --shadow: 0 1px 3px rgba(59, 130, 246, 0.1), 0 1px 2px rgba(59, 130, 246, 0.06);
+  --shadow-md: 0 4px 6px rgba(59, 130, 246, 0.1), 0 2px 4px rgba(59, 130, 246, 0.06);
+  --shadow-lg: 0 10px 15px rgba(59, 130, 246, 0.1), 0 4px 6px rgba(59, 130, 246, 0.05);
+  --shadow-xl: 0 20px 25px rgba(59, 130, 246, 0.1), 0 10px 10px rgba(59, 130, 246, 0.04);
+
+  /* === Z-INDEX SCALE === */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+  /* === TRANSITIONS === */
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+
+  /* === BREAKPOINTS (for reference in JS) === */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* === DARK MODE SUPPORT (for future implementation) === */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Invert key colors for dark mode */
+    --color-slate-50: #0f172a;
+    --color-slate-100: #1e293b;
+    --color-slate-900: #f8fafc;
+    /* Electric blue remains the same - good contrast in dark mode */
+  }
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: none;
+    --transition-normal: none;
+    --transition-slow: none;
+  }
+}

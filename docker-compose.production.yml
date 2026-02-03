@@ -1,0 +1,340 @@
+# Knowledge Foyer Production Docker Compose Configuration
+# Complete production stack with load balancing, monitoring, and persistence
+
+version: '3.8'
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  knowledge-foyer:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  nginx_ssl:
+    driver: local
+  app_logs:
+    driver: local
+  postgres_backups:
+    driver: local
+
+# =============================================================================
+# SERVICES
+# =============================================================================
+services:
+  # ===========================================================================
+  # REVERSE PROXY & SSL TERMINATION
+  # ===========================================================================
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: knowledge-foyer-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - nginx_ssl:/etc/ssl/certs
+      - app_logs:/var/log/nginx
+    networks:
+      knowledge-foyer:
+        ipv4_address: 172.28.0.10
+    depends_on:
+      - app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # APPLICATION INSTANCES (Load Balanced)
+  # ===========================================================================
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - WS_PORT=3001
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASS=${SMTP_PASS}
+    volumes:
+      - app_logs:/app/logs
+    networks:
+      knowledge-foyer:
+        ipv4_address: 172.28.0.20
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) }).on('error', () => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  # ===========================================================================
+  # POSTGRESQL DATABASE
+  # ===========================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: knowledge-foyer-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-knowledge_foyer_prod}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--auth-host=md5"
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backups:/backups
+      - ./database/init:/docker-entrypoint-initdb.d
+      - ./database/postgresql.conf:/etc/postgresql/postgresql.conf
+    networks:
+      knowledge-foyer:
+        ipv4_address: 172.28.0.30
+    ports:
+      - "5432:5432"  # Expose for administration (remove in production if not needed)
+    command: >
+      postgres
+      -c config_file=/etc/postgresql/postgresql.conf
+      -c shared_preload_libraries=pg_stat_statements
+      -c pg_stat_statements.track=all
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-knowledge_foyer_prod}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 1G
+          cpus: '0.5'
+
+  # ===========================================================================
+  # REDIS CACHE
+  # ===========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: knowledge-foyer-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    volumes:
+      - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      knowledge-foyer:
+        ipv4_address: 172.28.0.40
+    ports:
+      - "6379:6379"  # Expose for administration (remove in production if not needed)
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+
+  # ===========================================================================
+  # MONITORING & LOGGING
+  # ===========================================================================
+  monitoring:
+    image: prom/prometheus:latest
+    container_name: knowledge-foyer-monitoring
+    restart: unless-stopped
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./monitoring/alert.rules:/etc/prometheus/alert.rules
+    ports:
+      - "9090:9090"
+    networks:
+      knowledge-foyer:
+        ipv4_address: 172.28.0.50
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=90d'
+      - '--web.enable-lifecycle'
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ===========================================================================
+  # DATABASE BACKUP SERVICE
+  # ===========================================================================
+  backup:
+    image: postgres:15-alpine
+    container_name: knowledge-foyer-backup
+    restart: unless-stopped
+    environment:
+      PGHOST: postgres
+      PGDATABASE: ${POSTGRES_DB:-knowledge_foyer_prod}
+      PGUSER: ${POSTGRES_USER:-postgres}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      BACKUP_SCHEDULE: "0 2 * * *"  # Daily at 2 AM
+      BACKUP_RETENTION_DAYS: 30
+    volumes:
+      - postgres_backups:/backups
+      - ./scripts/backup.sh:/backup.sh
+    networks:
+      knowledge-foyer:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      sh -c "
+        apk add --no-cache dcron &&
+        echo '$${BACKUP_SCHEDULE} /backup.sh' > /etc/crontabs/root &&
+        crond -f -d 8
+      "
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ===========================================================================
+  # SSL CERTIFICATE MANAGEMENT (Let's Encrypt)
+  # ===========================================================================
+  certbot:
+    image: certbot/certbot
+    container_name: knowledge-foyer-certbot
+    volumes:
+      - nginx_ssl:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: >
+      sh -c "
+        trap exit TERM;
+        while :; do
+          certbot renew --webroot --webroot-path=/var/www/certbot --quiet;
+          sleep 12h & wait $${!};
+        done;
+      "
+    networks:
+      knowledge-foyer:
+    depends_on:
+      - nginx
+
+  # ===========================================================================
+  # LOG AGGREGATION
+  # ===========================================================================
+  logrotate:
+    image: alpine:latest
+    container_name: knowledge-foyer-logrotate
+    restart: unless-stopped
+    volumes:
+      - app_logs:/logs
+      - ./logrotate/logrotate.conf:/etc/logrotate.conf
+    command: >
+      sh -c "
+        apk add --no-cache logrotate dcron &&
+        echo '0 1 * * * /usr/sbin/logrotate /etc/logrotate.conf' > /etc/crontabs/root &&
+        crond -f -d 8
+      "
+    networks:
+      knowledge-foyer:
+
+  # ===========================================================================
+  # HEALTH CHECK SERVICE
+  # ===========================================================================
+  healthcheck:
+    image: alpine:latest
+    container_name: knowledge-foyer-healthcheck
+    restart: unless-stopped
+    volumes:
+      - ./scripts/healthcheck.sh:/healthcheck.sh
+    environment:
+      - CHECK_INTERVAL=60
+      - ALERT_WEBHOOK=${MONITORING_WEBHOOK_URL}
+    networks:
+      knowledge-foyer:
+    command: >
+      sh -c "
+        apk add --no-cache curl jq &&
+        chmod +x /healthcheck.sh &&
+        while true; do
+          /healthcheck.sh;
+          sleep $${CHECK_INTERVAL:-60};
+        done
+      "
+    depends_on:
+      - app
+      - postgres
+      - redis
