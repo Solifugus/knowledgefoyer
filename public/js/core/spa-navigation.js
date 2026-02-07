@@ -434,10 +434,10 @@ class SPANavigation {
     setupNavigationEvents() {
         // Listen for route changes
         document.addEventListener('spa:route-changed', (event) => {
-            const { route, params } = event.detail;
-            this.updateBreadcrumbs(route, params);
-            this.updateNavigationState(route);
-            this.trackPageView(route);
+            const { path, params } = event.detail;
+            this.updateBreadcrumbs(path, params);
+            this.updateNavigationState(path);
+            this.trackPageView(path);
         });
 
         // Listen for navigation errors

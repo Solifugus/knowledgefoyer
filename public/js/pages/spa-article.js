@@ -667,7 +667,7 @@ Start with a solid foundation that works without JavaScript, then enhance the ex
 
 ### Component-Based Architecture
 
-```javascript
+\`\`\`javascript
 class ArticleComponent {
   constructor(element) {
     this.element = element;
@@ -679,13 +679,7 @@ class ArticleComponent {
     this.render();
   }
 }
-```
-
-This approach creates self-contained components that manage their own state and behavior.
-
-### State Management
-
-For larger applications, consider implementing a centralized state management system. This helps maintain consistency across components and makes debugging easier.
+\`\`\`
 
 ## Performance Considerations
 

@@ -13,8 +13,7 @@ class SPALandingPage {
     this.hasMore = true;
 
     // Bind methods for event listeners
-    this.handlePageLoad = this.handlePageLoad.bind(this);
-    this.handleInfiniteScroll = this.handleInfiniteScroll.bind(this);
+    // (No methods to bind currently)
 
     this.init();
   }

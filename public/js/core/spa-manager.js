@@ -46,6 +46,10 @@ class SPAManager {
       await this.setupRoutes();
       await this.initializePageControllers();
 
+      // Handle the current route after routes are set up
+      const currentPath = window.location.hash.slice(1) || '/';
+      await this.router.handleRoute(currentPath);
+
       // Set up global event handlers
       this.setupGlobalHandlers();
 
