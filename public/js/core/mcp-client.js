@@ -318,6 +318,272 @@ class MCPClient {
         });
     }
 
+    // Search and discovery methods
+    async searchContent(searchParams) {
+        // Mock search implementation - would use MCP search tool in production
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const mockResults = this.generateMockSearchResults(searchParams);
+                resolve(mockResults);
+            }, 500 + Math.random() * 1000); // Simulate network delay
+        });
+    }
+
+    async getSearchSuggestions(query) {
+        // Mock suggestions implementation
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                const suggestions = this.generateMockSuggestions(query);
+                resolve(suggestions);
+            }, 200);
+        });
+    }
+
+    async getPopularTags() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve([
+                    { name: 'JavaScript', count: 342, slug: 'javascript' },
+                    { name: 'React', count: 186, slug: 'react' },
+                    { name: 'Node.js', count: 154, slug: 'nodejs' },
+                    { name: 'TypeScript', count: 128, slug: 'typescript' },
+                    { name: 'Python', count: 97, slug: 'python' },
+                    { name: 'Web Development', count: 89, slug: 'web-development' },
+                    { name: 'Performance', count: 76, slug: 'performance' },
+                    { name: 'Testing', count: 54, slug: 'testing' },
+                    { name: 'CSS', count: 43, slug: 'css' },
+                    { name: 'Database', count: 38, slug: 'database' }
+                ]);
+            }, 300);
+        });
+    }
+
+    async getTrendingAuthors() {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve([
+                    {
+                        id: 'user_1',
+                        username: 'sarah_dev',
+                        displayName: 'Sarah Chen',
+                        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
+                        bio: 'Full-stack developer passionate about performance optimization',
+                        articleCount: 23,
+                        followerCount: 1200,
+                        totalViews: 45000,
+                        isFollowing: false
+                    },
+                    {
+                        id: 'user_2',
+                        username: 'mike_js',
+                        displayName: 'Mike Rodriguez',
+                        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mike',
+                        bio: 'React expert and open source contributor',
+                        articleCount: 18,
+                        followerCount: 890,
+                        totalViews: 32000,
+                        isFollowing: true
+                    },
+                    {
+                        id: 'user_3',
+                        username: 'alex_data',
+                        displayName: 'Alex Thompson',
+                        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alex',
+                        bio: 'Data engineer specializing in scalable architectures',
+                        articleCount: 15,
+                        followerCount: 670,
+                        totalViews: 28000,
+                        isFollowing: false
+                    },
+                    {
+                        id: 'user_4',
+                        username: 'emma_ux',
+                        displayName: 'Emma Wilson',
+                        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=emma',
+                        bio: 'UX engineer bridging design and development',
+                        articleCount: 12,
+                        followerCount: 540,
+                        totalViews: 19000,
+                        isFollowing: false
+                    }
+                ]);
+            }, 400);
+        });
+    }
+
+    async followAuthor(authorId) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(`Following author: ${authorId}`);
+                resolve({ success: true });
+            }, 500);
+        });
+    }
+
+    async unfollowAuthor(authorId) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(`Unfollowed author: ${authorId}`);
+                resolve({ success: true });
+            }, 500);
+        });
+    }
+
+    async followTag(tagId) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(`Following tag: ${tagId}`);
+                resolve({ success: true });
+            }, 500);
+        });
+    }
+
+    async unfollowTag(tagId) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                console.log(`Unfollowed tag: ${tagId}`);
+                resolve({ success: true });
+            }, 500);
+        });
+    }
+
+    // Helper methods for generating mock data
+    generateMockSearchResults(searchParams) {
+        const { query, filters, page = 1, perPage = 20 } = searchParams;
+
+        // Mock articles data
+        const mockArticles = [
+            {
+                type: 'article',
+                id: 'art_1',
+                title: 'Building Scalable JavaScript Applications',
+                slug: 'building-scalable-javascript-applications',
+                excerpt: 'Learn the essential patterns and practices for building large-scale JavaScript applications that can grow with your team and requirements.',
+                author: { displayName: 'Sarah Chen', username: 'sarah_dev' },
+                publishedAt: '2024-01-15T10:30:00Z',
+                readingTime: 8,
+                tags: ['JavaScript', 'Architecture', 'Performance'],
+                feedbackCount: 23,
+                views: 3400,
+                rating: 4.7
+            },
+            {
+                type: 'article',
+                id: 'art_2',
+                title: 'React Performance Optimization Techniques',
+                slug: 'react-performance-optimization',
+                excerpt: 'Discover proven techniques to optimize React applications for better performance and user experience.',
+                author: { displayName: 'Mike Rodriguez', username: 'mike_js' },
+                publishedAt: '2024-01-12T14:20:00Z',
+                readingTime: 12,
+                tags: ['React', 'Performance', 'JavaScript'],
+                feedbackCount: 18,
+                views: 2890,
+                rating: 4.8
+            },
+            {
+                type: 'article',
+                id: 'art_3',
+                title: 'Database Design Best Practices',
+                slug: 'database-design-best-practices',
+                excerpt: 'A comprehensive guide to designing efficient and scalable database schemas for modern applications.',
+                author: { displayName: 'Alex Thompson', username: 'alex_data' },
+                publishedAt: '2024-01-10T09:15:00Z',
+                readingTime: 15,
+                tags: ['Database', 'Architecture', 'PostgreSQL'],
+                feedbackCount: 31,
+                views: 4200,
+                rating: 4.9
+            }
+        ];
+
+        const mockAuthors = [
+            {
+                type: 'author',
+                id: 'user_1',
+                username: 'sarah_dev',
+                displayName: 'Sarah Chen',
+                avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sarah',
+                bio: 'Full-stack developer passionate about performance optimization and scalable architectures',
+                articleCount: 23,
+                followerCount: 1200,
+                totalViews: 45000,
+                isFollowing: false
+            }
+        ];
+
+        const mockTags = [
+            {
+                type: 'tag',
+                id: 'tag_1',
+                name: 'JavaScript',
+                slug: 'javascript',
+                description: 'Articles about JavaScript programming language, frameworks, and best practices',
+                articleCount: 342,
+                followerCount: 890,
+                isFollowing: true
+            }
+        ];
+
+        // Filter results based on search parameters
+        let results = [];
+
+        if (filters.type === 'all' || filters.type === 'articles') {
+            results.push(...mockArticles);
+        }
+        if (filters.type === 'all' || filters.type === 'authors') {
+            results.push(...mockAuthors);
+        }
+        if (filters.type === 'all' || filters.type === 'tags') {
+            results.push(...mockTags);
+        }
+
+        // Simulate filtering by query
+        if (query) {
+            results = results.filter(item => {
+                const searchText = (item.title || item.displayName || item.name || '').toLowerCase();
+                return searchText.includes(query.toLowerCase());
+            });
+        }
+
+        // Calculate pagination
+        const startIndex = (page - 1) * perPage;
+        const endIndex = startIndex + perPage;
+        const paginatedResults = results.slice(startIndex, endIndex);
+
+        return {
+            items: paginatedResults,
+            stats: {
+                total: results.length,
+                articles: results.filter(r => r.type === 'article').length,
+                authors: results.filter(r => r.type === 'author').length,
+                tags: results.filter(r => r.type === 'tag').length
+            },
+            pagination: {
+                page,
+                perPage,
+                totalPages: Math.ceil(results.length / perPage)
+            }
+        };
+    }
+
+    generateMockSuggestions(query) {
+        const allSuggestions = [
+            { type: 'article', text: 'JavaScript performance' },
+            { type: 'article', text: 'React best practices' },
+            { type: 'article', text: 'Node.js scaling' },
+            { type: 'tag', text: 'JavaScript', count: 342 },
+            { type: 'tag', text: 'React', count: 186 },
+            { type: 'tag', text: 'Performance', count: 76 },
+            { type: 'author', text: 'Sarah Chen' },
+            { type: 'author', text: 'Mike Rodriguez' }
+        ];
+
+        return allSuggestions
+            .filter(suggestion => suggestion.text.toLowerCase().includes(query.toLowerCase()))
+            .slice(0, 6);
+    }
+
     // Connection status
     isConnected() {
         return this.connectionState === 'connected';

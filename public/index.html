@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Foyer - Professional Publishing Platform</title>
+
+    <!-- SEO and Social Meta Tags -->
+    <meta name="description" content="A professional publishing platform where creators share evolving work and receive structured, quality feedback.">
+    <meta name="keywords" content="publishing, feedback, articles, writing, collaboration">
+    <meta name="author" content="Knowledge Foyer">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Knowledge Foyer">
+    <meta property="og:description" content="Professional publishing platform with structured feedback">
+    <meta property="og:url" content="https://knowledgefoyer.com">
+    <meta property="og:site_name" content="Knowledge Foyer">
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2f5233">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Knowledge Foyer">
+
+    <!-- Favicon and PWA Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/layouts/spa.css">
+
+    <!-- Preconnect to external fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body class="spa-shell">
+    <!-- Skip Link for Accessibility -->
+    <a href="#spa-content" class="skip-link">Skip to main content</a>
+
+    <!-- Global Header Navigation -->
+    <header class="header" id="app-header">
+        <div class="header-container">
+            <!-- Brand Logo -->
+            <a href="#/" class="header-brand" data-spa-link>
+                <div class="brand-logo">KF</div>
+                <span class="brand-text">Knowledge Foyer</span>
+            </a>
+
+            <!-- Main Navigation Menu -->
+            <nav class="nav-menu" aria-label="Main navigation" id="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="#/" class="nav-link" data-spa-link>
+                            <span class="nav-icon">🏠</span>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="nav-discover">
+                        <button class="nav-link nav-button" id="discover-btn">
+                            <span class="nav-icon">🗂️</span>
+                            <span class="nav-text">Discover</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- User Menu (when authenticated) -->
+            <div class="user-menu" id="user-menu" style="display: none;">
+                <button class="user-menu-trigger" id="user-menu-trigger" aria-label="User menu">
+                    <img class="user-avatar" id="user-avatar" src="" alt="" loading="lazy">
+                    <span class="user-name" id="user-name"></span>
+                    <svg class="user-menu-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M4.5 6L8 9.5L11.5 6H4.5Z"/>
+                    </svg>
+                </button>
+
+                <div class="user-dropdown" id="user-dropdown">
+                    <div class="user-dropdown-header">
+                        <div class="user-info">
+                            <div class="user-display-name" id="user-display-name"></div>
+                            <div class="user-username" id="user-username"></div>
+                        </div>
+                    </div>
+
+                    <div class="user-dropdown-body">
+                        <a href="#/dashboard" class="dropdown-link" data-spa-link>
+                            <span class="dropdown-icon">📊</span>
+                            Dashboard
+                        </a>
+                        <a href="#/create" class="dropdown-link" data-spa-link>
+                            <span class="dropdown-icon">✍️</span>
+                            Create Article
+                        </a>
+                        <a href="#/profile" class="dropdown-link" data-spa-link>
+                            <span class="dropdown-icon">👤</span>
+                            My Profile
+                        </a>
+
+                        <hr class="dropdown-divider">
+
+                        <button class="dropdown-link dropdown-button" id="logout-btn">
+                            <span class="dropdown-icon">🚪</span>
+                            Sign Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authentication CTAs (when not authenticated) -->
+            <div class="auth-ctas" id="auth-ctas">
+                <button class="btn btn-secondary btn-sm" id="login-btn">
+                    Sign In
+                </button>
+                <button class="btn btn-primary btn-sm" id="register-btn">
+                    Get Started
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-button" id="mobile-menu-button" aria-label="Toggle mobile menu">
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+                <span class="mobile-menu-line"></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-content">
+                <!-- Mobile Navigation -->
+                <nav class="mobile-nav">
+                    <a href="#/" class="mobile-nav-link" data-spa-link>
+                        <span class="mobile-nav-icon">🏠</span>
+                        Home
+                    </a>
+                    <button class="mobile-nav-link mobile-nav-button" id="mobile-discover-btn">
+                        <span class="mobile-nav-icon">🗂️</span>
+                        Discover Collections
+                    </button>
+                </nav>
+
+                <!-- Mobile Auth Section -->
+                <div class="mobile-auth" id="mobile-auth-guest">
+                    <button class="btn btn-primary btn-full" id="mobile-register-btn">
+                        Get Started
+                    </button>
+                    <button class="btn btn-secondary btn-full" id="mobile-login-btn">
+                        Sign In
+                    </button>
+                </div>
+
+                <!-- Mobile User Section (when authenticated) -->
+                <div class="mobile-user" id="mobile-auth-user" style="display: none;">
+                    <div class="mobile-user-info">
+                        <img class="mobile-user-avatar" id="mobile-user-avatar" src="" alt="">
+                        <div class="mobile-user-details">
+                            <div class="mobile-user-name" id="mobile-user-name"></div>
+                            <div class="mobile-user-username" id="mobile-user-username"></div>
+                        </div>
+                    </div>
+
+                    <nav class="mobile-user-nav">
+                        <a href="#/dashboard" class="mobile-nav-link" data-spa-link>
+                            <span class="mobile-nav-icon">📊</span>
+                            Dashboard
+                        </a>
+                        <a href="#/create" class="mobile-nav-link" data-spa-link>
+                            <span class="mobile-nav-icon">✍️</span>
+                            Create Article
+                        </a>
+                        <a href="#/profile" class="mobile-nav-link" data-spa-link>
+                            <span class="mobile-nav-icon">👤</span>
+                            My Profile
+                        </a>
+                        <button class="mobile-nav-link mobile-nav-button" id="mobile-logout-btn">
+                            <span class="mobile-nav-icon">🚪</span>
+                            Sign Out
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main SPA Content Container -->
+    <main id="spa-content" class="spa-content" role="main">
+        <!-- Loading State (shown on initial load) -->
+        <div class="page-loading" id="initial-loading">
+            <div class="page-loading-content">
+                <div class="page-loading-spinner"></div>
+                <p class="page-loading-text">Loading Knowledge Foyer...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Container -->
+    <div id="modal-container" class="modal-container" aria-hidden="true"></div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Keyboard Shortcuts Help (hidden by default) -->
+    <div id="shortcuts-help" class="shortcuts-help" style="display: none;">
+        <div class="shortcuts-content">
+            <h3>Keyboard Shortcuts</h3>
+            <div class="shortcuts-list">
+                <div class="shortcut">
+                    <kbd>Ctrl</kbd> + <kbd>/</kbd>
+                    <span>Show this help</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>Ctrl</kbd> + <kbd>K</kbd>
+                    <span>Quick search</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>G</kbd> then <kbd>H</kbd>
+                    <span>Go to home</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>G</kbd> then <kbd>D</kbd>
+                    <span>Go to dashboard</span>
+                </div>
+                <div class="shortcut">
+                    <kbd>C</kbd>
+                    <span>Create new article</span>
+                </div>
+            </div>
+            <button class="shortcuts-close">Close</button>
+        </div>
+    </div>
+
+    <!-- Core JavaScript -->
+    <script src="/js/core/app.js"></script>
+    <script src="/js/core/router.js"></script>
+    <script src="/js/core/mcp-client.js"></script>
+    <script src="/js/core/spa-navigation.js"></script>
+    <script src="/js/core/spa-performance.js"></script>
+
+    <!-- Components -->
+    <script src="/js/components/modal.js"></script>
+    <script src="/js/components/feedback-system.js"></script>
+    <script src="/js/components/article-editor.js"></script>
+
+    <!-- Page Controllers -->
+    <script src="/js/pages/spa-landing.js"></script>
+    <script src="/js/pages/spa-article.js"></script>
+    <script src="/js/pages/spa-dashboard.js"></script>
+    <script src="/js/pages/spa-editor.js"></script>
+    <script src="/js/pages/spa-search.js"></script>
+
+    <!-- SPA Manager (Initialize last) -->
+    <script src="/js/core/spa-manager.js"></script>
+
+    <!-- Initialize SPA -->
+    <script>
+        // Initialize Knowledge Foyer SPA when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Starting Knowledge Foyer SPA...');
+
+            try {
+                // Initialize the SPA
+                window.spa = new SPAManager();
+
+                // Setup global keyboard shortcuts
+                document.addEventListener('keydown', (event) => {
+                    // Ctrl+/ or Cmd+/ - Show shortcuts help
+                    if ((event.ctrlKey || event.metaKey) && event.key === '/') {
+                        event.preventDefault();
+                        const help = document.getElementById('shortcuts-help');
+                        help.style.display = help.style.display === 'none' ? 'block' : 'none';
+                    }
+
+                    // Ctrl+K or Cmd+K - Quick search (when implemented)
+                    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+                        event.preventDefault();
+                        // TODO: Implement quick search modal
+                        console.log('Quick search shortcut pressed');
+                    }
+
+                    // Single key shortcuts (only when not in input)
+                    if (!event.target.matches('input, textarea, [contenteditable]')) {
+                        switch (event.key.toLowerCase()) {
+                            case 'c':
+                                // Create new article
+                                if (window.spa && window.spa.auth && window.spa.auth.isAuthenticated()) {
+                                    window.spa.router.navigate('/create');
+                                } else {
+                                    window.spa?.modal?.showLogin();
+                                }
+                                break;
+
+                            case 'g':
+                                // Go to shortcuts (followed by another key)
+                                event.preventDefault();
+                                let nextKey = '';
+                                const keyHandler = (e) => {
+                                    nextKey = e.key.toLowerCase();
+                                    document.removeEventListener('keydown', keyHandler);
+
+                                    switch (nextKey) {
+                                        case 'h':
+                                            window.spa?.router?.navigate('/');
+                                            break;
+                                        case 'd':
+                                            if (window.spa?.auth?.isAuthenticated()) {
+                                                window.spa.router.navigate('/dashboard');
+                                            }
+                                            break;
+                                    }
+                                };
+                                document.addEventListener('keydown', keyHandler);
+                                break;
+                        }
+                    }
+                });
+
+                // Setup shortcuts help close button
+                document.querySelector('.shortcuts-close')?.addEventListener('click', () => {
+                    document.getElementById('shortcuts-help').style.display = 'none';
+                });
+
+                console.log('✅ Knowledge Foyer SPA initialized successfully');
+
+            } catch (error) {
+                console.error('❌ Failed to initialize SPA:', error);
+
+                // Show fallback error message
+                document.getElementById('spa-content').innerHTML = `
+                    <div class="error-page">
+                        <div class="error-content">
+                            <h1>Application Error</h1>
+                            <p>Failed to load Knowledge Foyer. Please refresh the page.</p>
+                            <button class="btn btn-primary" onclick="window.location.reload()">
+                                Refresh Page
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+
+        // Global error handler
+        window.addEventListener('error', (event) => {
+            console.error('💥 Global JavaScript error:', event.error);
+
+            // Show user-friendly error notification
+            if (window.spa?.showNotification) {
+                window.spa.showNotification('Something went wrong. Please refresh the page.', 'error');
+            }
+        });
+
+        // Global promise rejection handler
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('💥 Unhandled promise rejection:', event.reason);
+
+            // Show user-friendly error notification
+            if (window.spa?.showNotification) {
+                window.spa.showNotification('Something went wrong. Please try again.', 'error');
+            }
+        });
+
+        // Service Worker registration (for PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker registered:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('❌ Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

@@ -28,15 +28,19 @@ class KnowledgeFoyerApp {
 
     async checkAuthStatus() {
         const token = localStorage.getItem('authToken');
+        console.log('🔐 checkAuthStatus called, token:', token ? 'present' : 'null');
 
         if (token) {
             try {
+                console.log('🔐 Verifying token with /api/auth/me...');
                 // Verify token is still valid
-                const response = await fetch('/api/auth/verify', {
+                const response = await fetch('/api/auth/me', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
                 });
+
+                console.log('🔐 Auth verification response status:', response.status);
 
                 if (response.ok) {
                     const userData = await response.json();
@@ -44,13 +48,17 @@ class KnowledgeFoyerApp {
                     this.user = userData.user;
                     console.log('👤 User authenticated:', this.user.username);
                 } else {
+                    console.log('❌ Token invalid, removing from localStorage');
                     // Token invalid, remove it
                     localStorage.removeItem('authToken');
                 }
             } catch (error) {
-                console.error('Auth check failed:', error);
+                console.error('❌ Auth check failed:', error);
+                console.log('❌ Removing token due to error');
                 localStorage.removeItem('authToken');
             }
+        } else {
+            console.log('🔐 No token found in localStorage');
         }
     }
 
@@ -190,6 +198,7 @@ class KnowledgeFoyerApp {
 
     // Authentication methods
     async login(credentials) {
+        console.log('🔐 App.login called with:', credentials);
         try {
             // Map email to identifier for backend API compatibility
             const loginData = {
@@ -202,14 +211,23 @@ class KnowledgeFoyerApp {
                 loginData.remember_me = credentials.remember_me;
             }
 
+            console.log('🔐 Sending login request with data:', { ...loginData, password: '[HIDDEN]' });
+
             const response = await this.apiRequest('/api/auth/login', {
                 method: 'POST',
                 body: JSON.stringify(loginData)
             });
 
+            console.log('🔐 Login response status:', response?.status);
+
             if (response.ok) {
                 const data = await response.json();
+                console.log('🔐 Full response data:', data);
+                console.log('🔐 Tokens:', data.tokens);
+                console.log('🔐 Access token:', data.tokens?.access_token);
+
                 localStorage.setItem('authToken', data.tokens.access_token);
+                console.log('🔐 Token stored, checking localStorage:', localStorage.getItem('authToken'));
 
                 this.isAuthenticated = true;
                 this.user = data.user;
