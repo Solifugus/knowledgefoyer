@@ -34,14 +34,14 @@ class SPALandingPage {
    * Handle page load event from router
    * @param {CustomEvent} event - Router page load event
    */
-  handlePageLoad(event) {
+  async handlePageLoad(event) {
     // Only handle landing page routes
     if (event.detail.path !== '/' && event.detail.path !== '') {
       return;
     }
 
     console.log('🏠 Loading SPA landing page...');
-    this.initializePage();
+    await this.initializePage();
   }
 
   /**

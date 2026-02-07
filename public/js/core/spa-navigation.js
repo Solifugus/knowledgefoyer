@@ -83,8 +83,8 @@ class SPANavigation {
             </ol>
         `;
 
-        // Re-bind SPA links
-        this.manager.router.bindSPALinks();
+        // Re-bind SPA links (method not needed for current implementation)
+        // this.manager.router.bindSPALinks();
     }
 
     /**
