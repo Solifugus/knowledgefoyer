@@ -1028,37 +1028,127 @@ class SPAManager {
   ensureEventHandlers() {
     console.log('🔧 Ensuring event handlers are attached...');
 
+    // Store reference to this for event handlers
+    const spaManager = this;
+
     // Re-check and attach authentication button handlers if missing
     const loginBtn = document.getElementById('login-btn');
     const registerBtn = document.getElementById('register-btn');
     const discoverBtn = document.getElementById('discover-btn');
 
-    // Check if handlers are already attached by testing if click triggers console logs
-    if (loginBtn && !loginBtn.hasAttribute('data-handler-attached')) {
-      loginBtn.addEventListener('click', (e) => {
+    // Force re-attachment by removing old handlers first
+    if (loginBtn) {
+      // Remove old handler and attribute
+      loginBtn.removeAttribute('data-handler-attached');
+      // Clone node to remove all event listeners
+      const newLoginBtn = loginBtn.cloneNode(true);
+      loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
+
+      // Add new working handler with proper context
+      newLoginBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        this.modal?.showLogin();
+        console.log('🎯 Login button clicked - opening modal...');
+        if (spaManager.modal && spaManager.modal.showLogin) {
+          spaManager.modal.showLogin();
+        } else {
+          console.error('❌ Modal system not available');
+        }
       });
-      loginBtn.setAttribute('data-handler-attached', 'true');
-      console.log('✅ Login button handler ensured');
+      newLoginBtn.setAttribute('data-handler-attached', 'true');
+      console.log('✅ Login button handler ensured with proper context');
     }
 
-    if (registerBtn && !registerBtn.hasAttribute('data-handler-attached')) {
-      registerBtn.addEventListener('click', (e) => {
+    if (registerBtn) {
+      // Remove old handler and attribute
+      registerBtn.removeAttribute('data-handler-attached');
+      // Clone node to remove all event listeners
+      const newRegisterBtn = registerBtn.cloneNode(true);
+      registerBtn.parentNode.replaceChild(newRegisterBtn, registerBtn);
+
+      // Add new working handler with proper context
+      newRegisterBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        this.modal?.showRegister();
+        console.log('🎯 Register button clicked - opening modal...');
+        if (spaManager.modal && spaManager.modal.showRegister) {
+          spaManager.modal.showRegister();
+        } else {
+          console.error('❌ Modal system not available');
+        }
       });
-      registerBtn.setAttribute('data-handler-attached', 'true');
-      console.log('✅ Register button handler ensured');
+      newRegisterBtn.setAttribute('data-handler-attached', 'true');
+      console.log('✅ Register button handler ensured with proper context');
     }
 
-    if (discoverBtn && !discoverBtn.hasAttribute('data-handler-attached')) {
-      discoverBtn.addEventListener('click', () => {
-        this.showNotification('Discover feature coming soon!', 'info');
+    if (discoverBtn) {
+      // Remove old handler and attribute
+      discoverBtn.removeAttribute('data-handler-attached');
+      // Clone node to remove all event listeners
+      const newDiscoverBtn = discoverBtn.cloneNode(true);
+      discoverBtn.parentNode.replaceChild(newDiscoverBtn, discoverBtn);
+
+      // Add new working handler with proper context
+      newDiscoverBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('🎯 Discover button clicked...');
+        spaManager.showNotification('Discover feature coming soon!', 'info');
       });
-      discoverBtn.setAttribute('data-handler-attached', 'true');
-      console.log('✅ Discover button handler ensured');
+      newDiscoverBtn.setAttribute('data-handler-attached', 'true');
+      console.log('✅ Discover button handler ensured with proper context');
     }
+
+    // Additional: Set onclick properties for browser automation compatibility
+    const finalLoginBtn = document.getElementById('login-btn');
+    const finalRegisterBtn = document.getElementById('register-btn');
+
+    if (finalLoginBtn) {
+      finalLoginBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log('🎯 Login button onclick triggered!');
+        if (spaManager.modal && spaManager.modal.showLogin) {
+          spaManager.modal.showLogin();
+        }
+        return false;
+      };
+      console.log('✅ Login button onclick property set');
+    }
+
+    if (finalRegisterBtn) {
+      finalRegisterBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log('🎯 Register button onclick triggered!');
+        if (spaManager.modal && spaManager.modal.showRegister) {
+          spaManager.modal.showRegister();
+        }
+        return false;
+      };
+      console.log('✅ Register button onclick property set');
+    }
+
+    // Also ensure modal keyboard handlers work
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && spaManager.modal) {
+        console.log('🎯 Escape pressed - closing modals...');
+        spaManager.modal.closeAll();
+      }
+    });
+
+    // Global click handler as ultimate fallback
+    document.addEventListener('click', function(e) {
+      const target = e.target.closest('#login-btn, #register-btn');
+      if (target) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('🎯 Global fallback click handler triggered for:', target.id);
+
+        if (target.id === 'login-btn' && spaManager.modal) {
+          spaManager.modal.showLogin();
+        } else if (target.id === 'register-btn' && spaManager.modal) {
+          spaManager.modal.showRegister();
+        }
+      }
+    }, true); // Use capture phase
+
+    console.log('✅ All event handlers ensured with multiple binding strategies');
   }
 
   /**
