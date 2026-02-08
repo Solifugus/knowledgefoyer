@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Foyer Diagnostic</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #f5f5f5; }
+        .test { margin: 10px 0; padding: 10px; background: white; border-radius: 5px; }
+        .pass { border-left: 5px solid green; }
+        .fail { border-left: 5px solid red; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Knowledge Foyer SPA Diagnostic</h1>
+    <p>Testing SPA components and identifying issues...</p>
+
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+
+        function addResult(test, success, error = null) {
+            const div = document.createElement('div');
+            div.className = `test ${success ? 'pass' : 'fail'}`;
+            div.innerHTML = `
+                <strong>${test}:</strong>
+                <span class="${success ? 'success' : 'error'}">${success ? '✅ PASS' : '❌ FAIL'}</span>
+                ${error ? `<br><small class="error">Error: ${error}</small>` : ''}
+            `;
+            results.appendChild(div);
+        }
+
+        async function runDiagnostics() {
+            console.log('🔍 Starting Knowledge Foyer diagnostic...');
+
+            // Test 1: Basic DOM
+            try {
+                addResult('DOM Ready', document.readyState === 'complete', null);
+            } catch (e) {
+                addResult('DOM Ready', false, e.message);
+            }
+
+            // Test 2: Fetch Core JS Files
+            const jsFiles = [
+                '/js/core/app.js',
+                '/js/core/router.js',
+                '/js/core/mcp-client.js',
+                '/js/core/spa-manager.js',
+                '/js/core/spa-navigation.js',
+                '/js/core/spa-performance.js'
+            ];
+
+            for (const file of jsFiles) {
+                try {
+                    const response = await fetch(file);
+                    addResult(`Fetch ${file}`, response.ok, response.ok ? null : `Status: ${response.status}`);
+                } catch (e) {
+                    addResult(`Fetch ${file}`, false, e.message);
+                }
+            }
+
+            // Test 3: Fetch CSS Files
+            const cssFiles = [
+                '/css/main.css',
+                '/css/layouts/spa.css'
+            ];
+
+            for (const file of cssFiles) {
+                try {
+                    const response = await fetch(file);
+                    addResult(`Fetch ${file}`, response.ok, response.ok ? null : `Status: ${response.status}`);
+                } catch (e) {
+                    addResult(`Fetch ${file}`, false, e.message);
+                }
+            }
+
+            // Test 4: PWA Files
+            try {
+                const swResponse = await fetch('/sw.js');
+                addResult('Service Worker file', swResponse.ok, swResponse.ok ? null : `Status: ${swResponse.status}`);
+            } catch (e) {
+                addResult('Service Worker file', false, e.message);
+            }
+
+            try {
+                const manifestResponse = await fetch('/manifest.json');
+                addResult('PWA Manifest file', manifestResponse.ok, manifestResponse.ok ? null : `Status: ${manifestResponse.status}`);
+            } catch (e) {
+                addResult('PWA Manifest file', false, e.message);
+            }
+
+            // Test 5: Try loading individual components
+            try {
+                // Test if we can load a script dynamically
+                const script = document.createElement('script');
+                script.src = '/js/core/router.js';
+                script.onload = () => {
+                    addResult('Dynamic Router load', typeof Router !== 'undefined', null);
+                };
+                script.onerror = () => {
+                    addResult('Dynamic Router load', false, 'Script failed to load');
+                };
+                document.head.appendChild(script);
+            } catch (e) {
+                addResult('Dynamic Router load', false, e.message);
+            }
+
+            // Test 6: Check if main SPA classes exist after loading
+            setTimeout(() => {
+                addResult('SPAManager class available', typeof SPAManager !== 'undefined', null);
+                addResult('Router class available', typeof Router !== 'undefined', null);
+                addResult('MCPClient class available', typeof MCPClient !== 'undefined', null);
+
+                // Test 7: Try to initialize minimal components
+                try {
+                    const testRouter = new Router();
+                    addResult('Router instantiation', true, null);
+                } catch (e) {
+                    addResult('Router instantiation', false, e.message);
+                }
+
+                try {
+                    const testMCP = new MCPClient();
+                    addResult('MCPClient instantiation', true, null);
+                } catch (e) {
+                    addResult('MCPClient instantiation', false, e.message);
+                }
+
+                try {
+                    const testSPA = new SPAManager();
+                    addResult('SPAManager instantiation', true, null);
+                } catch (e) {
+                    addResult('SPAManager instantiation', false, e.message);
+                }
+            }, 2000);
+        }
+
+        // Capture any errors
+        window.addEventListener('error', (event) => {
+            addResult('JavaScript Error Detected', false, `${event.filename}:${event.lineno} - ${event.message}`);
+        });
+
+        window.addEventListener('unhandledrejection', (event) => {
+            addResult('Promise Rejection Detected', false, event.reason?.toString() || 'Unknown');
+        });
+
+        // Start diagnostics when page loads
+        document.addEventListener('DOMContentLoaded', runDiagnostics);
+    </script>
+</body>
+</html>

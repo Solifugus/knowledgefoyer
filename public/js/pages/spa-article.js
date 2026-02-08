@@ -667,7 +667,7 @@ Start with a solid foundation that works without JavaScript, then enhance the ex
 
 ### Component-Based Architecture
 
-\`\`\`javascript
+\\\`\\\`\\\`javascript
 class ArticleComponent {
   constructor(element) {
     this.element = element;
@@ -679,7 +679,7 @@ class ArticleComponent {
     this.render();
   }
 }
-\`\`\`
+\\\`\\\`\\\`
 
 ## Performance Considerations
 
