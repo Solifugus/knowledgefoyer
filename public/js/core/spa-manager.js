@@ -409,6 +409,11 @@ class SPAManager {
     // Global keyboard shortcuts (already set up in index.html, but can extend here)
     this.setupKeyboardShortcuts();
 
+    // Ensure event handlers are set up even if DOM elements weren't ready initially
+    setTimeout(() => {
+      this.ensureEventHandlers();
+    }, 100);
+
     // Handle authentication state changes
     document.addEventListener('auth:login', (event) => {
       this.handleAuthChange(event.detail.user);
@@ -1015,6 +1020,45 @@ class SPAManager {
     };
 
     return fetch(url, defaultOptions);
+  }
+
+  /**
+   * Ensure event handlers are properly attached (fallback for timing issues)
+   */
+  ensureEventHandlers() {
+    console.log('🔧 Ensuring event handlers are attached...');
+
+    // Re-check and attach authentication button handlers if missing
+    const loginBtn = document.getElementById('login-btn');
+    const registerBtn = document.getElementById('register-btn');
+    const discoverBtn = document.getElementById('discover-btn');
+
+    // Check if handlers are already attached by testing if click triggers console logs
+    if (loginBtn && !loginBtn.hasAttribute('data-handler-attached')) {
+      loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.modal?.showLogin();
+      });
+      loginBtn.setAttribute('data-handler-attached', 'true');
+      console.log('✅ Login button handler ensured');
+    }
+
+    if (registerBtn && !registerBtn.hasAttribute('data-handler-attached')) {
+      registerBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.modal?.showRegister();
+      });
+      registerBtn.setAttribute('data-handler-attached', 'true');
+      console.log('✅ Register button handler ensured');
+    }
+
+    if (discoverBtn && !discoverBtn.hasAttribute('data-handler-attached')) {
+      discoverBtn.addEventListener('click', () => {
+        this.showNotification('Discover feature coming soon!', 'info');
+      });
+      discoverBtn.setAttribute('data-handler-attached', 'true');
+      console.log('✅ Discover button handler ensured');
+    }
   }
 
   /**

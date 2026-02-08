@@ -25,7 +25,7 @@ class SPALandingPage {
     console.log('🏠 SPA Landing Page controller initializing...');
 
     // Listen for router page load events
-    document.addEventListener('spa:page-loaded', this.handlePageLoad);
+    document.addEventListener('spa:page-loaded', this.handlePageLoad.bind(this));
 
     console.log('✅ SPA Landing Page controller ready');
   }
